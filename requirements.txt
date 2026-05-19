@@ -1,0 +1,8 @@
+flask
+selenium
+pandas
+openpyxl
+pillow
+requests
+easyocr
+waitress

@@ -1,0 +1,28 @@
+# Python local files and caching
+__pycache__/
+*.py[cod]
+*$py.class
+venv/
+.venv/
+env/
+
+# WebDriver and Browser state
+.wdm/
+chromedriver.exe
+
+# Local State & SQLite Databases
+*.db
+*.db-journal
+*.db-shm
+*.db-wal
+captcha.png
+vtu_nexus.log
+
+# Scraping Reports and Output Files
+results_output.xlsx
+formatted_result_sheet.xlsx
+final_report.xlsx
+
+# IDE Settings
+.vscode/
+.idea/
