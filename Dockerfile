@@ -1,35 +1,36 @@
-# Use python 3.10 slim as base image
-FROM python:3.10-slim
+# Use the robust python 3.10 slim-bookworm image
+FROM python:3.10-slim-bookworm
 
-# Install system dependencies, Google Chrome, and clean up temporary files
-RUN apt-get update && apt-get install -y \
+# Avoid prompts during apt installation
+ENV DEBIAN_FRONTEND=noninteractive
+
+# Install core dependencies, download official Google Chrome, install it, and clean up
+RUN apt-get update && apt-get install -y --no-install-recommends \
     wget \
-    curl \
-    unzip \
     gnupg \
-    libgconf-2-4 \
+    ca-certificates \
     libnss3 \
-    libxss1 \
-    libasound2 \
     libatk-bridge2.0-0 \
-    libgtk-3-0 \
-    --no-install-recommends \
-    && wget -q -O - https://dl-ssl.google.com/linux/linux_signing_key.pub | apt-key add - \
-    && echo "deb [arch=amd64] http://dl.google.com/linux/chrome/deb/ stable main" >> /etc/apt/sources.list.d/google.list \
-    && apt-get update && apt-get install -y google-chrome-stable \
+    libgtk-4-1 \
+    libasound2 \
+    xdg-utils \
+    && wget -q https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb \
+    && apt-get install -y ./google-chrome-stable_current_amd64.deb \
+    && rm google-chrome-stable_current_amd64.deb \
+    && apt-get clean \
     && rm -rf /var/lib/apt/lists/*
 
-# Set working directory inside container
+# Set working directory in container
 WORKDIR /app
 
 # Copy all project files into the container
 COPY . .
 
-# Install required Python packages
+# Install Python dependencies
 RUN pip install --no-cache-dir -r requirements.txt
 
-# Expose port 5000 for web traffic
+# Expose port 5000
 EXPOSE 5000
 
-# Start Flask using Waitress (Production Web Server) instead of debug mode
+# Start Flask
 CMD ["python", "app.py"]
