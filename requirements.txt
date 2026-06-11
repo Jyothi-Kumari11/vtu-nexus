@@ -1,11 +1,9 @@
---extra-index-url https://download.pytorch.org/whl/cpu
-torch
-torchvision
 flask
 selenium
 pandas
 openpyxl
 pillow
 requests
-easyocr
+pytesseract
+opencv-python-headless
 waitress

@@ -1,7 +1,7 @@
 # ================================================================
 #   VTU RESULTS SCRAPER - Standalone, Self-contained
 # ================================================================
-import os, re, sys, time, logging
+import os, re, sys, time, logging, shutil
 import pytesseract, cv2
 import numpy as np
 import pandas as pd
@@ -19,7 +19,11 @@ from openpyxl.chart import BarChart, PieChart, Reference
 logging.basicConfig(level=logging.INFO, format='%(asctime)s [%(levelname)s] %(message)s')
 log = logging.getLogger("vtu")
 
-pytesseract.pytesseract.tesseract_cmd = r"C:\Program Files\Tesseract-OCR\tesseract.exe"
+_tess = shutil.which("tesseract")
+if _tess:
+    pytesseract.pytesseract.tesseract_cmd = _tess
+else:
+    pytesseract.pytesseract.tesseract_cmd = r"C:\Program Files\Tesseract-OCR\tesseract.exe"
 
 VTU_URL        = "https://results.vtu.ac.in/D25J26Ecbcs/index.php"
 INPUT_FILE     = "usn_list.xlsx"
@@ -65,8 +69,15 @@ def start_browser():
     opts = webdriver.ChromeOptions()
     opts.add_argument("--disable-blink-features=AutomationControlled")
     opts.add_experimental_option("excludeSwitches", ["enable-automation"])
+    # Container/Linux headless mode
+    if os.name != "nt":
+        opts.add_argument("--headless=new")
+        opts.add_argument("--no-sandbox")
+        opts.add_argument("--disable-dev-shm-usage")
+        opts.add_argument("--disable-gpu")
     driver = webdriver.Chrome(options=opts)
-    driver.maximize_window()
+    if os.name == "nt":
+        driver.maximize_window()
     log.info("Browser started.")
     return driver
 

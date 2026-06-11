@@ -2,13 +2,14 @@ FROM python:3.10-slim-bookworm
 
 ENV DEBIAN_FRONTEND=noninteractive
 
-# Install system deps + Google Chrome in one layer
+# Install system deps: Google Chrome + Tesseract OCR + OpenCV libs
 RUN apt-get update \
     && apt-get install -y --no-install-recommends \
        wget gnupg ca-certificates fonts-liberation \
        libnss3 libatk-bridge2.0-0 libgtk-3-0 libasound2 \
        libxcomposite1 libxdamage1 libxrandr2 libgbm1 libpango-1.0-0 \
        libcairo2 libcups2 libdbus-1-3 libxkbcommon0 xdg-utils \
+       tesseract-ocr libgl1-mesa-glx libglib2.0-0 \
     && wget -q https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb \
     && apt-get install -y ./google-chrome-stable_current_amd64.deb \
     && rm google-chrome-stable_current_amd64.deb \
@@ -23,4 +24,4 @@ COPY . .
 
 EXPOSE 5000
 
-CMD ["python", "app.py"]
+CMD ["python", "-m", "waitress", "--host=0.0.0.0", "--port=5000", "app:app"]

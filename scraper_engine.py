@@ -1,7 +1,7 @@
 """
 VTU Nexus - Scraper Engine (runs in background thread for Flask dashboard)
 """
-import os, re, sys, time, logging
+import os, re, sys, time, logging, shutil
 import cv2, pytesseract
 import pandas as pd
 from collections import Counter
@@ -12,7 +12,11 @@ from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.common.exceptions import TimeoutException
 
-pytesseract.pytesseract.tesseract_cmd = r"C:\Program Files\Tesseract-OCR\tesseract.exe"
+_tess = shutil.which("tesseract")
+if _tess:
+    pytesseract.pytesseract.tesseract_cmd = _tess
+else:
+    pytesseract.pytesseract.tesseract_cmd = r"C:\Program Files\Tesseract-OCR\tesseract.exe"
 
 VTU_URL      = "https://results.vtu.ac.in/D25J26Ecbcs/index.php"
 INPUT_FILE   = "usn_list.xlsx"
@@ -72,8 +76,15 @@ def _start_browser():
     opts = webdriver.ChromeOptions()
     opts.add_argument("--disable-blink-features=AutomationControlled")
     opts.add_experimental_option("excludeSwitches", ["enable-automation"])
+    # Container/Linux headless mode
+    if os.name != "nt":
+        opts.add_argument("--headless=new")
+        opts.add_argument("--no-sandbox")
+        opts.add_argument("--disable-dev-shm-usage")
+        opts.add_argument("--disable-gpu")
     d = webdriver.Chrome(options=opts)
-    d.maximize_window()
+    if os.name == "nt":
+        d.maximize_window()
     return d
 
 

@@ -1,6 +1,11 @@
 """
 VTU Nexus - Flask Dashboard
 Run: python app.py
+
+Author  : Jyothi Kumari
+USN     : 1JT24IS021
+College : Jyothy Institute of Technology
+Email   : jyothikumari1146@gmail.com
 """
 import os, sys, subprocess, shutil
 from flask import Flask, jsonify, render_template, send_file, request

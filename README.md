@@ -82,3 +82,16 @@ graph TD
 
 ## 🛡️ License & Academic Disclaimer
 This project is built for educational demonstration and academic administrative automation. Ensure compliance with university guidelines and terms of service when automating web portals.
+
+---
+
+## 👩‍💻 About the Author
+
+| Field        | Details                          |
+|--------------|----------------------------------|
+| **Name**     | Jyothi Kumari                    |
+| **USN**      | 1JT24IS021                       |
+| **College**  | Jyothy Institute of Technology   |
+| **Email**    | jyothikumari1146@gmail.com       |
+
+> *VTU Nexus was designed and developed by Jyothi Kumari as part of an academic project to automate and streamline VTU student results extraction and analytics.*
