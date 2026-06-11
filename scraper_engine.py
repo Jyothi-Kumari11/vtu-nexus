@@ -190,6 +190,11 @@ def _scrape_worker():
                         })
 
                     _push(f"  ✓ {name} — {added} subjects extracted")
+                    # Save incrementally so dashboard updates in real-time
+                    try:
+                        pd.DataFrame(all_results).dropna(how='all').to_excel(RAW_OUTPUT, index=False)
+                    except Exception as save_err:
+                        _push(f"  Save warning: {save_err}", "WARNING")
                     break
 
                 except Exception as e:
