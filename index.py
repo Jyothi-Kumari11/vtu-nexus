@@ -1,5 +1,5 @@
 # ================================================================
-#   VTU RESULTS SCRAPER - Standalone, Self-contained
+#   VTU SCOREMATRIX SCRAPER - Standalone, Self-contained
 # ================================================================
 import os, re, sys, time, logging, shutil
 import pytesseract, cv2

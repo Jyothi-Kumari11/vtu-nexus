@@ -1,5 +1,5 @@
 """
-VTU Nexus - Scraper Engine (runs in background thread for Flask dashboard)
+VTU ScoreMatrix - Scraper Engine (runs in background thread for Flask dashboard)
 """
 import os, re, sys, time, logging, shutil
 import cv2, pytesseract
@@ -156,7 +156,7 @@ def _scrape_worker():
                         alert = WebDriverWait(driver, 3).until(EC.alert_is_present())
                         msg = alert.text.lower(); alert.accept()
                         if "captcha" in msg:
-                            _push("  Wrong CAPTCHA, retrying…", "WARNING")
+                            _push("  VTU ScoreMatrix — Wrong CAPTCHA, retrying…", "WARNING")
                             retry += 1; time.sleep(1); continue
                         else:
                             _push(f"  {usn} — no data on VTU portal. Skipping.", "WARNING")

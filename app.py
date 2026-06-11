@@ -1,5 +1,5 @@
 """
-VTU Nexus - Flask Dashboard
+VTU ScoreMatrix - Flask Dashboard
 Run: python app.py
 
 Author  : Jyothi Kumari
@@ -203,7 +203,7 @@ def captcha_preview():
 
 if __name__ == "__main__":
     print("\n" + "="*50)
-    print("  VTU NEXUS DASHBOARD")
+    print("  VTU SCOREMATRIX DASHBOARD")
     print("  Open: http://127.0.0.1:5000")
     print("="*50 + "\n")
     port = int(os.environ.get("PORT", 5000))

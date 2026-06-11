@@ -1,6 +1,6 @@
-# 🎓 VTU Nexus: Enterprise Results Scraping & Analytics Dashboard
+# 🎓 VTU ScoreMatrix: Enterprise Results Scraping & Analytics Dashboard
 
-VTU Nexus is a high-performance, multi-threaded academic results extraction, scraping, and analytics system. Powered by a robust Selenium-driven automation engine, a multi-strategy OCR CAPTCHA solver, and a beautiful Flask-based monitoring dashboard, VTU Nexus enables educational institutions to mass-extract student results, solve CAPTCHAs automatically, analyze performance metrics, and generate professional Excel reports.
+VTU ScoreMatrix is a high-performance, multi-threaded academic results extraction, scraping, and analytics system. Powered by a robust Selenium-driven automation engine, a multi-strategy OCR CAPTCHA solver, and a beautiful Flask-based monitoring dashboard, VTU ScoreMatrix enables educational institutions to mass-extract student results, solve CAPTCHAs automatically, analyze performance metrics, and generate professional Excel reports.
 
 ---
 
@@ -94,4 +94,4 @@ This project is built for educational demonstration and academic administrative 
 | **College**  | Jyothy Institute of Technology   |
 | **Email**    | jyothikumari1146@gmail.com       |
 
-> *VTU Nexus was designed and developed by Jyothi Kumari as part of an academic project to automate and streamline VTU student results extraction and analytics.*
+> *VTU ScoreMatrix was designed and developed by Jyothi Kumari as part of an academic project to automate and streamline VTU student results extraction and analytics.*
