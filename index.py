@@ -102,6 +102,11 @@ if os.path.exists(RAW_OUTPUT):
 # Check report-only flag
 report_only = "--report-only" in sys.argv
 
+# Check semester override
+for arg in sys.argv:
+    if arg.startswith("--semester="):
+        SEM_DIGIT = arg.split("=")[1]
+
 if report_only:
     log.info("Report-only mode active. Skipping scraping step.")
     if not all_results:

@@ -33,6 +33,7 @@ status = {
     "total": 0, "processed": 0, "skipped": 0,
     "current_usn": "", "feed": [],
     "pass_count": 0, "fail_count": 0,
+    "semester": "3"
 }
 _stop_event = Event()
 
@@ -178,7 +179,7 @@ def _scrape_worker():
                         code = m[0]
                         if code in seen: continue
                         d = re.search(r'\d', code)
-                        if d and d.group() != SEM_DIGIT: continue
+                        if d and d.group() != status.get("semester", "3"): continue
                         seen.add(code); added += 1
                         all_results.append({
                             "USN": usn, "Name": name, "Semester": sem,
@@ -230,9 +231,10 @@ def _scrape_worker():
         status["running"] = False
 
 
-def start_scraping():
+def start_scraping(sem="3"):
     if status["running"]:
         return False
+    status["semester"] = str(sem)
     t = Thread(target=_scrape_worker, daemon=True)
     t.start()
     return True

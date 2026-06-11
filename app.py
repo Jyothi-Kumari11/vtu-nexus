@@ -22,7 +22,9 @@ def index():
 
 @app.route("/api/start", methods=["POST"])
 def start():
-    ok = engine.start_scraping()
+    data = request.get_json(silent=True) or {}
+    sem = data.get("semester", "3")
+    ok = engine.start_scraping(sem)
     if ok:
         return jsonify({"status": "started"})
     return jsonify({"status": "already_running"}), 400
@@ -41,9 +43,11 @@ def status():
 
 @app.route("/api/generate_report", methods=["POST"])
 def generate_report():
+    data = request.get_json(silent=True) or {}
+    sem = data.get("semester", "3")
     try:
         result = subprocess.run(
-            [sys.executable, "index.py", "--report-only"],
+            [sys.executable, "index.py", "--report-only", f"--semester={sem}"],
             cwd=BASE, capture_output=True, text=True, timeout=600
         )
         if result.returncode == 0:

@@ -1283,6 +1283,20 @@
           <span class="usn-badge-count" id="loaded-usn-count">Loading…</span>
         </div>
 
+        <div style="margin-top: 1rem; margin-bottom: 0.85rem;">
+          <label style="font-size: 0.72rem; font-weight: 700; color: var(--text-muted); letter-spacing: 0.05em; display: block; margin-bottom: 0.4rem; text-transform: uppercase;">Target Semester</label>
+          <select id="semester-select" style="width: 100%; background: rgba(30, 41, 59, 0.4); border: 1px solid var(--border); color: var(--text-primary); padding: 0.75rem 1rem; border-radius: 10px; font-family: 'Plus Jakarta Sans', sans-serif; font-size: 0.8rem; font-weight: 600; cursor: pointer; outline: none; transition: var(--transition-fast);">
+            <option value="1">1st Semester</option>
+            <option value="2">2nd Semester</option>
+            <option value="3" selected>3rd Semester</option>
+            <option value="4">4th Semester</option>
+            <option value="5">5th Semester</option>
+            <option value="6">6th Semester</option>
+            <option value="7">7th Semester</option>
+            <option value="8">8th Semester</option>
+          </select>
+        </div>
+
         <!-- Primary controls -->
         <button class="action-btn" id="btn-initialize" onclick="triggerStartScrape()">INITIALIZE SCRAPING</button>
         <button class="abort-btn" id="btn-abort" onclick="triggerAbortScrape()">⏹ STOP SCRAPING</button>
@@ -1856,7 +1870,12 @@
       addSystemLogEntry('Initializing academic scraping process…', 'INFO');
       document.getElementById('btn-initialize').disabled = true;
       try {
-        const res = await fetch('/api/start', { method: 'POST' });
+        const sem = document.getElementById('semester-select').value;
+        const res = await fetch('/api/start', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ semester: sem })
+        });
         const data = await res.json();
         if (data.status === 'already_running') {
           addSystemLogEntry('Engine is already active.', 'WARNING');
@@ -1881,7 +1900,12 @@
       btn.textContent = 'GENERATING…';
 
       try {
-        const res = await fetch('/api/generate_report', { method: 'POST' });
+        const sem = document.getElementById('semester-select').value;
+        const res = await fetch('/api/generate_report', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ semester: sem })
+        });
         const data = await res.json();
         btn.textContent = 'GENERATE REPORT';
         btn.disabled = false;
