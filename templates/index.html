@@ -1850,8 +1850,9 @@
         // Feed live logs
         handleServerLogs(state.feed);
 
-        // Reload dataset on finish
-        if (state.done || !state.running) {
+        // Reload dataset on finish or when new students are processed
+        if (state.done || !state.running || (state.processed && state.processed > (window.lastProcessedCount || 0))) {
+          window.lastProcessedCount = state.processed || 0;
           refreshRecordsTable();
         }
       } catch (e) { }
